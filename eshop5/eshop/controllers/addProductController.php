@@ -44,6 +44,11 @@ if (!empty($errors)) {
 $image     = "default.jpg";
 $uploadDir = __DIR__ . "/../public/uploads/products/";
 
+// إنشاء المجلد تلقائياً إذا لم يكن موجوداً
+if (!is_dir($uploadDir)) {
+    mkdir($uploadDir, 0755, true);
+}
+
 if (!empty($_FILES['image']['name'])) {
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     $fileMime     = mime_content_type($_FILES['image']['tmp_name']);
@@ -54,9 +59,16 @@ if (!empty($_FILES['image']['name'])) {
         exit();
     }
 
-    $ext   = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-    $image = uniqid('prod_', true) . '.' . strtolower($ext);
-    move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $image);
+    $ext      = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+    $filename = uniqid('prod_', true) . '.' . strtolower($ext);
+
+    if (!move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $filename)) {
+        $_SESSION['flash_errors'] = ["فشل رفع الصورة. تأكد من صلاحيات المجلد."];
+        header("Location: " . $base . "/views/admin/addProduct.php");
+        exit();
+    }
+
+    $image = $filename;
 }
 
 // ── Insertion ─────────────────────────────────────────────────────────────────
