@@ -51,7 +51,7 @@ $p->stock    = (int)$stock;
 // ── Upload image (optionnel) ──────────────────────────────────────────────────
 $uploadDir = __DIR__ . "/../public/uploads/products/";
 
-// إنشاء المجلد تلقائياً إذا لم يكن موجوداً
+
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
 }

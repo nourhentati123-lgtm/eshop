@@ -44,7 +44,7 @@ if (!empty($errors)) {
 $image     = "default.jpg";
 $uploadDir = __DIR__ . "/../public/uploads/products/";
 
-// إنشاء المجلد تلقائياً إذا لم يكن موجوداً
+
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
 }
