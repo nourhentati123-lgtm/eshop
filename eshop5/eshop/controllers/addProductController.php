@@ -63,7 +63,7 @@ if (!empty($_FILES['image']['name'])) {
     $filename = uniqid('prod_', true) . '.' . strtolower($ext);
 
     if (!move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $filename)) {
-        $_SESSION['flash_errors'] = ["فشل رفع الصورة. تأكد من صلاحيات المجلد."];
+        $_SESSION['flash_errors'] = ["error"];
         header("Location: " . $base . "/views/admin/addProduct.php");
         exit();
     }
